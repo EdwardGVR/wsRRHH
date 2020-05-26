@@ -10,12 +10,24 @@ namespace wsRRHH
 {
     public class Conexion
     {
+        // SmarterASP Hosted
+        private static string host = "SQL5046.site4now.net";
+        private static string db = "DB_A61EBE_etps4rrhh";
+        private static string user = "DB_A61EBE_etps4rrhh_admin";
+        private static string pass = "etps4rrhh";
+
+        string cadena = $"Data Source = {host}; Initial Catalog = {db}; User Id={user}; Password={pass}";
+
         // SQL Laptop
-        private static string dbUser = "DESKTOP-9LV57DI\\SQLEXPRESS";
+        //private static string host = "DESKTOP-9LV57DI\\SQLEXPRESS";
+
         // SQL Desktop
-        //private static string dbUser = "DESKTOP-F0AK4UN";
-        private static string db = "etps4_rrhh";
-        string cadena = $"Data Source = {dbUser}; Initial Catalog = {db}; Integrated Security = True";
+        //private static string host = "DESKTOP-F0AK4UN";
+
+        //private static string db = "etps4_rrhh";
+
+        //string cadena = $"Data Source = {host}; Initial Catalog = {db}; Integrated Security = True";
+
         SqlConnection conexion;
 
         public SqlConnection conectar()
