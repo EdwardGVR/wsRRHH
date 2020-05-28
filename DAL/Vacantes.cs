@@ -5,7 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace wsRRHH
+namespace wsRRHH.DAL
 {
     public class Vacantes
     {

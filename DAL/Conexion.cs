@@ -12,8 +12,8 @@ namespace wsRRHH
     {
         // SmarterASP Hosted
         private static string host = "SQL5046.site4now.net";
-        private static string db = "DB_A61EBE_etps4rrhh";
-        private static string user = "DB_A61EBE_etps4rrhh_admin";
+        private static string db = "DB_A621AD_etps4rrhh";
+        private static string user = "DB_A621AD_etps4rrhh_admin";
         private static string pass = "etps4rrhh";
 
         string cadena = $"Data Source = {host}; Initial Catalog = {db}; User Id={user}; Password={pass}";
