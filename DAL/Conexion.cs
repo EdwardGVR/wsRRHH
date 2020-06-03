@@ -96,11 +96,24 @@ namespace wsRRHH
 
         public void insertQuery(SqlCommand query)
         {
+            voidQuery(query);
+        }
+
+        public void deleteQuery(SqlCommand query)
+        {
+            voidQuery(query);
+        }
+
+        public void updateQuery(SqlCommand query)
+        {
+            voidQuery(query);
+        }
+
+        public void voidQuery(SqlCommand query)
+        {
             try
             {
-                SqlCommand q = new SqlCommand();
-                q = query;
-                q.Connection = conectar();
+                query.Connection = conectar();
                 abrir();
                 query.ExecuteNonQuery();
                 cerrar();

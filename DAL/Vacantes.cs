@@ -11,6 +11,7 @@ namespace wsRRHH.DAL
     {
         Conexion cn = new Conexion();
 
+        // SELECTS
         public DataSet getVacantes (int top = 0)
         {
             SqlCommand query = new SqlCommand();
@@ -53,20 +54,7 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
-        {
-            SqlCommand query = new SqlCommand();
-            query.CommandText = "INSERT INTO vacantes(codigo_vacante, vacante, id_departamento, cupo_vacante, descripcion) " +
-                "VALUES(@codVac, @vacante, @idDpto, @cupo, @descripcion)";
-            query.Parameters.AddWithValue("@codVac", codVac);
-            query.Parameters.AddWithValue("@vacante", vacante);
-            query.Parameters.AddWithValue("@idDpto", idDpto);
-            query.Parameters.AddWithValue("@cupo", cupo);
-            query.Parameters.AddWithValue("@descripcion", descripcion);
-            cn.insertQuery(query);
-        }
-
-        public DataSet getPrioridades ()
+        public DataSet getPrioridades()
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT prioridad_requisito FROM prioridades_requisitos";
@@ -83,6 +71,44 @@ namespace wsRRHH.DAL
 
             int corrVac = int.Parse(result.Tables[0].Rows[0][0].ToString());
             return corrVac + 1;
+        }
+
+        // INSERTS
+        public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO vacantes(codigo_vacante, vacante, id_departamento, cupo_vacante, descripcion) " +
+                "VALUES(@codVac, @vacante, @idDpto, @cupo, @descripcion)";
+            query.Parameters.AddWithValue("@codVac", codVac);
+            query.Parameters.AddWithValue("@vacante", vacante);
+            query.Parameters.AddWithValue("@idDpto", idDpto);
+            query.Parameters.AddWithValue("@cupo", cupo);
+            query.Parameters.AddWithValue("@descripcion", descripcion);
+            cn.insertQuery(query);
+        }
+
+        public void insertRequisito (int idVac, string codVac, string requisito, string detalles, int idPrioridad)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO requisitos_vacantes (id_vacante, codigo_vacante, requisito, detalles, id_prioridad_requisito) " +
+                "VALUES(@idVac, @codVac, @reqVac, @detReqVac, @idPrioridadReqVac)";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            query.Parameters.AddWithValue("@codVac", codVac);
+            query.Parameters.AddWithValue("@reqVac", requisito);
+            query.Parameters.AddWithValue("@detReqVac", detalles);
+            query.Parameters.AddWithValue("@idPrioridadReqVac", idPrioridad);
+            cn.insertQuery(query);
+        }
+
+        // UPDATES
+
+
+        // DELETES
+        public void deleteVacante (string codVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM vacantes WHERE codigo_vacante = @codVac";
+            query.Parameters.AddWithValue("@codVac", codVac);
         }
     }
 }
