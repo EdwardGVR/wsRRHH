@@ -50,6 +50,12 @@ namespace wsRRHH
         }
 
         [WebMethod]
+        public int getIdVac (string codVac)
+        {
+            return vacantes.getIdVac(codVac);
+        }
+
+        [WebMethod]
         public DataSet getCapacitaciones(int top = 0)
         {
             return capacitaciones.getCapacitaciones(top);
@@ -102,6 +108,12 @@ namespace wsRRHH
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
         {
             vacantes.insertVacante(codVac, vacante, idDpto, cupo, descripcion);
+        }
+
+        [WebMethod]
+        public void insertRequisito(int idVac, string codVac, string requisito, string detalles, int idPrioridad)
+        {
+            vacantes.insertRequisito(idVac, codVac, requisito, detalles, idPrioridad);
         }
     }
 }

@@ -73,6 +73,17 @@ namespace wsRRHH.DAL
             return corrVac + 1;
         }
 
+        public int getIdVac (string codVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT id_vacante FROM vacantes WHERE codigo_vacante = @codVac";
+            query.Parameters.AddWithValue("@codVac", codVac);
+            DataSet result = cn.selectQuery(query);
+
+            int idVac = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return idVac;
+        }
+
         // INSERTS
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
         {
@@ -104,11 +115,18 @@ namespace wsRRHH.DAL
 
 
         // DELETES
+
+        // Borra una vacante y sus requisitos
         public void deleteVacante (string codVac)
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "DELETE FROM vacantes WHERE codigo_vacante = @codVac";
             query.Parameters.AddWithValue("@codVac", codVac);
+            cn.deleteQuery(query);
+
+            query.CommandText = "DELETE FROM requisitos_vacantes WHERE codigo_vacante = @codVac";
+            query.Parameters.AddWithValue("@codVac", codVac);
+            cn.deleteQuery(query);
         }
     }
 }
