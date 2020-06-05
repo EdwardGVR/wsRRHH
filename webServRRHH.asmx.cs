@@ -115,5 +115,12 @@ namespace wsRRHH
         {
             vacantes.insertRequisito(idVac, codVac, requisito, detalles, idPrioridad);
         }
+
+        // DELETES
+        [WebMethod]
+        public void deleteVacante (string vacCode)
+        {
+            vacantes.deleteVacante(vacCode);
+        }
     }
 }

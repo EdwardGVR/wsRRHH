@@ -119,14 +119,15 @@ namespace wsRRHH.DAL
         // Borra una vacante y sus requisitos
         public void deleteVacante (string codVac)
         {
-            SqlCommand query = new SqlCommand();
-            query.CommandText = "DELETE FROM vacantes WHERE codigo_vacante = @codVac";
-            query.Parameters.AddWithValue("@codVac", codVac);
-            cn.deleteQuery(query);
+            SqlCommand queryReq = new SqlCommand();
+            queryReq.CommandText = "DELETE FROM requisitos_vacantes WHERE codigo_vacante = @codVac";
+            queryReq.Parameters.AddWithValue("@codVac", codVac);
+            cn.deleteQuery(queryReq);
 
-            query.CommandText = "DELETE FROM requisitos_vacantes WHERE codigo_vacante = @codVac";
-            query.Parameters.AddWithValue("@codVac", codVac);
-            cn.deleteQuery(query);
+            SqlCommand queryVac = new SqlCommand();
+            queryVac.CommandText = "DELETE FROM vacantes WHERE codigo_vacante = @codVac";
+            queryVac.Parameters.AddWithValue("@codVac", codVac);
+            cn.deleteQuery(queryVac);
         }
     }
 }
