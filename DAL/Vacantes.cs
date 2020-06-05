@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.CodeDom;
+using System.Net.NetworkInformation;
 
 namespace wsRRHH.DAL
 {
@@ -82,6 +84,42 @@ namespace wsRRHH.DAL
 
             int idVac = int.Parse(result.Tables[0].Rows[0][0].ToString());
             return idVac;
+        }
+
+        public DataSet getDetallesVacante (string codVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                    "vacantes.id_vacante AS ID, " +
+                    "vacantes.codigo_vacante AS Codigo, " +
+                    "vacantes.vacante AS Vacante, " +
+                    "departamentos.departamento AS Departamento, " +
+                    "vacantes.cupo_vacante AS Cupo, " +
+                    "vacantes.descripcion AS Descripcion, " +
+                    "vacantes.fehca_creacion AS \"Fecha creacion\", " +
+                    "estados_vacantes.estado AS Estado " +
+                    "FROM vacantes " +
+                    "JOIN departamentos ON vacantes.id_departamento = departamentos.id_departamento " +
+                    "JOIN estados_vacantes ON vacantes.id_estado_vacante = estados_vacantes.id_estado_vacante " +
+                    "WHERE vacantes.codigo_vacante = @codVac";
+            query.Parameters.AddWithValue("@codVac", codVac);
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getRequisitosVac (string codVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "requisitos_vacantes.id_requisitos_vacantem AS ID, " +
+                "requisitos_vacantes.codigo_vacante AS Vacante, " +
+                "requisitos_vacantes.requisito AS Requisito, " +
+                "requisitos_vacantes.detalles AS Detalles " +
+                "prioridades_requisitos.prioridad_requisito AS Prioridad " +
+                "FROM requisitos_vacantes " +
+                "JOIN prioridades_requisitos ON requisitos_vacantes.id_prioridad_requisito = requisitos_vacantes.id_prioridad_requisito " +
+                "WHERE requisitos_vacantes.codigo_vacante = @codVac";
+            query.Parameters.AddWithValue("@codVac", codVac);
+            return cn.selectQuery(query);
         }
 
         // INSERTS
