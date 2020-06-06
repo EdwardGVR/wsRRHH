@@ -122,6 +122,24 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getDetallesRequisito (int idReq)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "vacantes.vacante AS Vacante, " +
+                "requisitos_vacantes.codigo_vacante AS \"Codigo Vacante\", " +
+                "requisitos_vacantes.id_requisitos_vacante, " +
+                "requisitos_vacantes.requisito AS Requisito, " +
+                "requisitos_vacantes.detalles AS Detalles, " +
+                "prioridades_requisitos.prioridad_requisito AS Prioridad " +
+                "FROM requisitos_vacantes " +
+                "JOIN vacantes ON requisitos_vacantes.codigo_vacante = vacantes.codigo_vacante " +
+                "JOIN prioridades_requisitos ON prioridades_requisitos.id_prioridad_requisito = requisitos_vacantes.id_prioridad_requisito " +
+                "WHERE requisitos_vacantes.id_requisitos_vacante = @idReq";
+            query.Parameters.AddWithValue("@idReq", idReq);
+            return cn.selectQuery(query);
+        }
+
         // INSERTS
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
         {

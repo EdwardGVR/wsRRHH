@@ -55,6 +55,12 @@ namespace wsRRHH
         }
 
         [WebMethod]
+        public DataSet getDetallesRequisito (int idReq)
+        {
+            return vacantes.getDetallesRequisito(idReq);
+        }
+
+        [WebMethod]
         // Obtiene el siguiente correlativo de la vacante segun departamento
         public int getCorrVac (int idDpto)
         {
