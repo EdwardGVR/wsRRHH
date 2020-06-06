@@ -110,13 +110,13 @@ namespace wsRRHH.DAL
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT " +
-                "requisitos_vacantes.id_requisitos_vacantem AS ID, " +
+                "requisitos_vacantes.id_requisitos_vacante AS ID, " +
                 "requisitos_vacantes.codigo_vacante AS Vacante, " +
                 "requisitos_vacantes.requisito AS Requisito, " +
-                "requisitos_vacantes.detalles AS Detalles " +
+                "requisitos_vacantes.detalles AS Detalles, " +
                 "prioridades_requisitos.prioridad_requisito AS Prioridad " +
                 "FROM requisitos_vacantes " +
-                "JOIN prioridades_requisitos ON requisitos_vacantes.id_prioridad_requisito = requisitos_vacantes.id_prioridad_requisito " +
+                "JOIN prioridades_requisitos ON requisitos_vacantes.id_prioridad_requisito = prioridades_requisitos.id_prioridad_requisito " +
                 "WHERE requisitos_vacantes.codigo_vacante = @codVac";
             query.Parameters.AddWithValue("@codVac", codVac);
             return cn.selectQuery(query);
