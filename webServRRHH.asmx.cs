@@ -43,6 +43,12 @@ namespace wsRRHH
         }
 
         [WebMethod]
+        public DataSet getEstadosVacantes ()
+        {
+            return vacantes.getEstadosVacantes();
+        }
+
+        [WebMethod]
         public DataSet getDetallesVacante (string codVac)
         {
             return vacantes.getDetallesVacante(codVac);
@@ -119,6 +125,13 @@ namespace wsRRHH
         public bool validarLogin(string user, string clave)
         {
             return usuarios.validarLogin(user, clave);
+        }
+
+        // UPDATES
+        [WebMethod]
+        public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
+        {
+            vacantes.updateVacante(codVac, newCodVac, vacante, descripcion, idDpto, idEstado, cupo);
         }
 
         // INSERTS

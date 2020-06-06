@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.CodeDom;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 
 namespace wsRRHH.DAL
 {
@@ -60,6 +61,13 @@ namespace wsRRHH.DAL
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT prioridad_requisito FROM prioridades_requisitos";
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getEstadosVacantes ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT id_estado_vacante, estado FROM estados_vacantes";
             return cn.selectQuery(query);
         }
 
@@ -168,7 +176,34 @@ namespace wsRRHH.DAL
         }
 
         // UPDATES
+        public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
+        {
+            SqlCommand query1 = new SqlCommand();
+            query1.CommandText = "UPDATE vacantes SET " +
+                "vacante = @vacante, " +
+                "codigo_vacante = @newCodVac, " +
+                "descripcion = @descripcion, " +
+                "id_departamento = @idDpto, " +
+                "cupo_vacante = @cupo, " +
+                "id_estado_vacante = @idEstado " +
+                "WHERE codigo_vacante = @codVac";
+            query1.Parameters.AddWithValue("@vacante", vacante);
+            query1.Parameters.AddWithValue("@newCodVac", newCodVac);
+            query1.Parameters.AddWithValue("@descripcion", descripcion);
+            query1.Parameters.AddWithValue("@idDpto", idDpto);
+            query1.Parameters.AddWithValue("@cupo", cupo);
+            query1.Parameters.AddWithValue("@idEstado", idEstado);
+            query1.Parameters.AddWithValue("@codVac", codVac);
+            cn.updateQuery(query1);
 
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "UPDATE requisitos_vacantes SET " +
+                "codigo_vacante = @newCodVac " +
+                "WHERE codigo_vacante = @codVac";
+            query2.Parameters.AddWithValue("@newCodVac", newCodVac);
+            query2.Parameters.AddWithValue("@codVac", codVac);
+            cn.updateQuery(query2);
+        }
 
         // DELETES
 
