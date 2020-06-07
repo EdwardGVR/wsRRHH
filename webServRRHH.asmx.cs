@@ -134,6 +134,12 @@ namespace wsRRHH
             vacantes.updateVacante(codVac, newCodVac, vacante, descripcion, idDpto, idEstado, cupo);
         }
 
+        [WebMethod]
+        public void updateRequisito (int idReq, string requisito, string detalles, int idPrioridad)
+        {
+            vacantes.updateRequisito(idReq, requisito, detalles, idPrioridad);
+        }
+
         // INSERTS
         [WebMethod]
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
@@ -152,6 +158,12 @@ namespace wsRRHH
         public void deleteVacante (string vacCode)
         {
             vacantes.deleteVacante(vacCode);
+        }
+
+        [WebMethod]
+        public void deleteRequisito (int idReq)
+        {
+            vacantes.deleteRequisito(idReq);
         }
     }
 }

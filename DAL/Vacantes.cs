@@ -205,6 +205,21 @@ namespace wsRRHH.DAL
             cn.updateQuery(query2);
         }
 
+        public void updateRequisito (int idReq, string requisito, string detalles, int idPrioridad)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "UPDATE requisitos_vacantes SET " +
+                "requisito = @requisito, " +
+                "detalles = @detalles, " +
+                "id_prioridad_requisito = @idPrioridad " +
+                "WHERE id_requisitos_vacante = @idReq";
+            query.Parameters.AddWithValue("@requisito", requisito);
+            query.Parameters.AddWithValue("@detalles", detalles);
+            query.Parameters.AddWithValue("@idPrioridad", idPrioridad);
+            query.Parameters.AddWithValue("@idReq", idReq);
+            cn.updateQuery(query);
+        }
+
         // DELETES
 
         // Borra una vacante y sus requisitos
@@ -219,6 +234,14 @@ namespace wsRRHH.DAL
             queryVac.CommandText = "DELETE FROM vacantes WHERE codigo_vacante = @codVac";
             queryVac.Parameters.AddWithValue("@codVac", codVac);
             cn.deleteQuery(queryVac);
+        }
+
+        public void deleteRequisito (int idReq)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM requisitos_vacantes WHERE id_requisitos_vacante = @idReq";
+            query.Parameters.AddWithValue("@idReq", idReq);
+            cn.deleteQuery(query);
         }
     }
 }
