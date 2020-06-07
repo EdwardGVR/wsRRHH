@@ -11,6 +11,7 @@ namespace wsRRHH.DAL
     {
         Conexion cn = new Conexion();
 
+        // SELECTS
         public DataSet getCapacitaciones(int top = 0)
         {
             SqlCommand query = new SqlCommand();
@@ -46,6 +47,20 @@ namespace wsRRHH.DAL
                     "JOIN estados_capacitaciones ON capacitaciones.id_estado_capacitacion = estados_capacitaciones.id_estado_capacitacion";
             }
             return cn.selectQuery(query);
+        }
+
+        // INSERTS
+        public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO capacitaciones " +
+                "(titulo, cupo, id_departamento, descripcion) " +
+                "VALUES (@titulo, @cupo, @id_departamento, @descripcion)";
+            query.Parameters.AddWithValue("@titulo", titulo);
+            query.Parameters.AddWithValue("@titulo", cupo);
+            query.Parameters.AddWithValue("@titulo", idDpto);
+            query.Parameters.AddWithValue("@titulo", descripcion);
+            cn.insertQuery(query);
         }
     }
 }

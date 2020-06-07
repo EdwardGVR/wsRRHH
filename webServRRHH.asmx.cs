@@ -177,6 +177,12 @@ namespace wsRRHH
             empleados.insertEmpleado(nombres, apellidos, dui, email, telefono1, telefono2, direccion, idDpto, idCargo, salario);
         }
 
+        [WebMethod]
+        public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
+        {
+            capacitaciones.insertCapacitacion(titulo, descripcion, cupo, idDpto);
+        }
+
         // DELETES
         [WebMethod]
         public void deleteVacante (string vacCode)
