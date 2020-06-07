@@ -139,6 +139,12 @@ namespace wsRRHH
             return usuarios.validarLogin(user, clave);
         }
 
+        [WebMethod]
+        public DataSet getDetallesEmpleado (string idType, int id, string dui)
+        {
+            return empleados.getDetallesEmpleado(idType, id, dui);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -163,6 +169,12 @@ namespace wsRRHH
         public void insertRequisito(int idVac, string codVac, string requisito, string detalles, int idPrioridad)
         {
             vacantes.insertRequisito(idVac, codVac, requisito, detalles, idPrioridad);
+        }
+
+        [WebMethod]
+        public void insertEmpleado (string nombres, string apellidos, string dui, string email, string telefono1, string telefono2, string direccion, int idDpto, int idCargo, double salario)
+        {
+            empleados.insertEmpleado(nombres, apellidos, dui, email, telefono1, telefono2, direccion, idDpto, idCargo, salario);
         }
 
         // DELETES
