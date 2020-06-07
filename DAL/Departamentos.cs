@@ -4,12 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace wsRRHH.DAL
 {
     public class Departamentos
     {
         Conexion cn = new Conexion();
+
+        public DataSet getDepartamentos ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM departamentos";
+            return cn.selectQuery(query);
+        }
 
         public DataSet getNombresDepartamentos()
         {
@@ -37,6 +45,13 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@idDpto", idDpto);
             DataSet result = cn.selectQuery(query);
             return result.Tables[0].Rows[0][0].ToString();
+        }
+
+        public DataSet getPuestos ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM cargos_empleados";
+            return cn.selectQuery(query);
         }
     }
 }

@@ -104,6 +104,12 @@ namespace wsRRHH
         }
 
         [WebMethod]
+        public DataSet getDepartamentos ()
+        {
+            return departamentos.getDepartamentos();
+        }
+
+        [WebMethod]
         public DataSet getNombresDepartamentos()
         {
             return departamentos.getNombresDepartamentos();
@@ -119,6 +125,12 @@ namespace wsRRHH
         public string getDptoAbv (int idDpto)
         {
             return departamentos.getDptoAbv(idDpto);
+        }
+
+        [WebMethod]
+        public DataSet getPuestos ()
+        {
+            return departamentos.getPuestos();
         }
 
         [WebMethod]
