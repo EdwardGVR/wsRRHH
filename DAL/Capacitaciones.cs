@@ -49,6 +49,63 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getDetallesCapacitacion (int idCap)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "capacitaciones.titulo, " +
+                "capacitaciones.cupo, " +
+                "capacitaciones.descripcion, " +
+                "capacitaciones.fecha_creacion, " +
+                "departamentos.departamento, " +
+                "estados_capacitaciones.estado " +
+                "FROM capacitaciones " +
+                "JOIN departamentos ON departamentos.id_departamento = capacitaciones.id_departamento " +
+                "JOIN estados_capacitaciones ON estados_capacitaciones.id_estado_capacitacion = capacitaciones.id_estado_capacitacion " +
+                "WHERE capacitaciones.id_capacitacion = @idCap";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getAsignCapacitaciones (int idCap)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "asignaciones_capacitaciones.id_asignacion_cap, " +
+                "empleados.nombres, " +
+                "empleados.apellidos, " +
+                "empleados.correo, " +
+                "departamentos.departamento AS \"Departamento empleado\" " +
+                "FROM asignaciones_capacitaciones " +
+                "JOIN empleados ON empleados.id_empleado = asignaciones_capacitaciones.id_empleado " +
+                "JOIN departamentos ON departamentos.id_departamento = empleados.id_departamento " +
+                "WHERE asignaciones_capacitaciones.id_capacitacion = @idCap";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            return cn.selectQuery(query);
+        }
+
+        public Boolean validateCapEmp (int idCap, int idEmp)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) " +
+                "FROM asignaciones_capacitaciones " +
+                "WHERE id_capacitacion = @idCap AND id_empleado = @idEmp";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            query.Parameters.AddWithValue("@idEmp", idEmp);
+
+            DataSet result = cn.selectQuery(query);
+
+            int resCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+
+            if (resCount >= 1)
+            {
+                return false;
+            } else
+            {
+                return true;
+            }
+        }
+
         // INSERTS
         public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
         {
@@ -60,6 +117,18 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@cupo", cupo);
             query.Parameters.AddWithValue("@id_departamento", idDpto);
             query.Parameters.AddWithValue("@descripcion", descripcion);
+            cn.insertQuery(query);
+        }
+
+        public void asignarEmpCap (int idCap, int idEmpleado, string codigo)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO asignaciones_capacitaciones " +
+                "(id_capacitacion, id_empleado, codigo) " +
+                "VALUES (@idCap, @idEmpleado, @codigo)";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            query.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+            query.Parameters.AddWithValue("@codigo", codigo);
             cn.insertQuery(query);
         }
     }

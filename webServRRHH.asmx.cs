@@ -157,6 +157,30 @@ namespace wsRRHH
             return usuarios.getNiveles();
         }
 
+        [WebMethod]
+        public DataSet getDetallesCapacitacion (int idCap)
+        {
+            return capacitaciones.getDetallesCapacitacion(idCap);
+        }
+
+        [WebMethod]
+        public DataSet getAsignCapacitaciones (int idCap)
+        {
+            return capacitaciones.getAsignCapacitaciones(idCap);
+        } 
+
+        [WebMethod]
+        public DataSet getEmpleadosByDpto (int idDpto)
+        {
+            return empleados.getEmpleadosByDpto(idDpto);
+        }
+
+        [WebMethod]
+        public Boolean validateCapEmp (int idCap, int idEmp)
+        {
+            return capacitaciones.validateCapEmp(idCap, idEmp);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -205,6 +229,12 @@ namespace wsRRHH
         public void insertUsuario (string nombres, string apellidos, string email, string usuario, string password, int idNivel)
         {
             usuarios.insertUsuario(nombres, apellidos, email, usuario, password, idNivel);
+        }
+
+        [WebMethod]
+        public void asignarEmpCap (int idCap, int idEmp, string codigo)
+        {
+            capacitaciones.asignarEmpCap(idCap, idEmp, codigo);
         }
 
         // DELETES

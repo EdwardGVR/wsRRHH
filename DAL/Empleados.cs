@@ -43,16 +43,30 @@ namespace wsRRHH.DAL
                 "contratos.salario AS Salario, " +
                 "contratos.fecha_contratacion AS FechaContrato, " +
                 "estados_contratos.estado AS EstadoContrato, " +
-                "cargos_empleados.cargo_empleado AS Cargo " +
+                "cargos_empleados.cargo_empleado AS Cargo, " +
+                "departamentos.departamento AS Departamento " +
                 "FROM empleados " +
                 "JOIN telefonos_empleados ON telefonos_empleados.id_empleado = empleados.id_empleado " +
                 "JOIN contratos ON contratos.id_empleado = empleados.id_empleado " +
                 "JOIN estados_contratos ON estados_contratos.id_estado_contrato = contratos.id_estado_contrato " +
                 "JOIN cargos_empleados ON cargos_empleados.id_cargo_empleado = empleados.id_cargo_empleado " +
+                "JOIN departamentos ON departamentos.id_departamento = empleados.id_departamento " +
                 "WHERE empleados.id_empleado = @id";
             query.Parameters.AddWithValue("@id", id);
             return cn.selectQuery(query);
         }
+
+        public DataSet getEmpleadosByDpto (int idDpto)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = " SELECT " +
+                "empleados.id_empleado AS ID, " +
+                "empleados.nombres + \' \' + empleados.apellidos AS Empleado " +
+                "FROM empleados " +
+                "WHERE empleados.id_departamento = @id";
+            query.Parameters.AddWithValue("@id", idDpto);
+            return cn.selectQuery(query);
+        } 
 
         // INSERTS
         public void insertEmpleado (string nombres, string apellidos, string dui, string email, string telefono1, string telefono2, string direccion, int idDpto, int idCargo, double salario)
