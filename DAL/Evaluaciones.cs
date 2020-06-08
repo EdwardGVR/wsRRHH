@@ -51,6 +51,37 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getDetallesEvaluacion (int idEval)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "evaluaciones.evaluacion AS Evaluacion, " +
+                "evaluaciones.objetivos AS Objetivo, " +
+                "evaluaciones.puntaje_maximo AS MaxScore, " +
+                "evaluaciones.fecha_creacion AS FechaCreacion, " +
+                "tipos_evaluaciones.tipo_evaluacion AS TipoEval " +
+                "FROM evaluaciones " +
+                "JOIN tipos_evaluaciones ON evaluaciones.id_tipo_evaluacion = tipos_evaluaciones.id_tipo_evaluacion " +
+                "WHERE evaluaciones.id_evaluacion = @idEval";
+            query.Parameters.AddWithValue("@idEval", idEval);
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getAsignEvalApl (int idEval)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "asignaciones_evaluaciones.id_asignacion_eval AS ID, " +
+                "aplicantes.nombres AS Nombres, " +
+                "aplicantes.apellidos AS Apellidos, " +
+                "aplicantes.email AS Email " +
+                "FROM asignaciones_evaluaciones " +
+                "JOIN aplicantes ON asignaciones_evaluaciones.id_aplicante = aplicantes.id_aplicante " +
+                "WHERE asignaciones_evaluaciones.id_evaluacion = @idEval";
+            query.Parameters.AddWithValue("@idEval", idEval);
+            return cn.selectQuery(query);
+        }
+
         // INSERTS
         public void insertEvaluacion (string evaluacion, int idTipo, string objetivos, int maxScore)
         {

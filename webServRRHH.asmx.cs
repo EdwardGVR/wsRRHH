@@ -181,6 +181,18 @@ namespace wsRRHH
             return capacitaciones.validateCapEmp(idCap, idEmp);
         }
 
+        [WebMethod]
+        public DataSet getDetallesEvaluacion(int idEval)
+        {
+            return evaluaciones.getDetallesEvaluacion(idEval);
+        }
+
+        [WebMethod]
+        public DataSet getAsignEvalApl (int idEval)
+        {
+            return evaluaciones.getAsignEvalApl(idEval);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
