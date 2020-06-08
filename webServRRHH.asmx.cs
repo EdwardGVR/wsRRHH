@@ -151,6 +151,12 @@ namespace wsRRHH
             return evaluaciones.getTiposEvaluaciones();
         }
 
+        [WebMethod]
+        public DataSet getNivelesUsuarios ()
+        {
+            return usuarios.getNiveles();
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -193,6 +199,12 @@ namespace wsRRHH
         public void insertEvaluacion (string evaluacion, int idTipo, string objetivos, int maxScore)
         {
             evaluaciones.insertEvaluacion(evaluacion, idTipo, objetivos, maxScore);
+        }
+
+        [WebMethod]
+        public void insertUsuario (string nombres, string apellidos, string email, string usuario, string password, int idNivel)
+        {
+            usuarios.insertUsuario(nombres, apellidos, email, usuario, password, idNivel);
         }
 
         // DELETES

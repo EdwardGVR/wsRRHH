@@ -11,6 +11,7 @@ namespace wsRRHH.DAL
 	{
 		Conexion cn = new Conexion();
 
+        // SELECTS
         public DataSet getUsuarios()
         {
             SqlCommand query = new SqlCommand();
@@ -51,6 +52,29 @@ namespace wsRRHH.DAL
                 return false;
             }
 
+        }
+
+        public DataSet getNiveles ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM niveles_usuarios";
+            return cn.selectQuery(query);
+        }
+
+        // INSERTS
+        public void insertUsuario (string nombres, string apellidos, string email, string usuario, string password, int idNivel)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO usuarios " +
+                "(nombres, apellidos, correo, usuario, password, id_nivel) " +
+                "VALUES (@nombres, @apellidos, @correo, @usuario, @password, @idNivel)";
+            query.Parameters.AddWithValue("@nombres", nombres);
+            query.Parameters.AddWithValue("@apellidos", apellidos);
+            query.Parameters.AddWithValue("@correo", email);
+            query.Parameters.AddWithValue("@usuario", usuario);
+            query.Parameters.AddWithValue("@password", password);
+            query.Parameters.AddWithValue("@idNivel", idNivel);
+            cn.insertQuery(query);
         }
     }
 }
