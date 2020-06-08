@@ -30,26 +30,28 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public DataSet getDetallesEmpleado (string idType, int id = 0, string dui = "")
+        public DataSet getDetallesEmpleado (int id)
         {
             SqlCommand query = new SqlCommand();
-            DataSet result = null;
-
-            switch (idType)
-            {
-                case "id":
-                    query.CommandText = "SELECT * FROM empleados WHERE id = @id";
-                    query.Parameters.AddWithValue("@id", id);
-                    result = cn.selectQuery(query);
-                    break;
-                case "dui":
-                    query.CommandText = "SELECT * FROM empleados WHERE DUI = @dui";
-                    query.Parameters.AddWithValue("@dui", dui);
-                    result = cn.selectQuery(query);
-                    break;
-            }
-
-            return result;
+            query.CommandText = "SELECT " +
+                "empleados.nombres AS Nombres, " +
+                "empleados.apellidos AS Apellidos, " +
+                "empleados.DUI AS DUI, " +
+                "empleados.correo AS Email, " +
+                "empleados.direccion AS Direccion, " +
+                "telefonos_empleados.telefono AS Telefono, " +
+                "contratos.salario AS Salario, " +
+                "contratos.fecha_contratacion AS FechaContrato, " +
+                "estados_contratos.estado AS EstadoContrato, " +
+                "cargos_empleados.cargo_empleado AS Cargo " +
+                "FROM empleados " +
+                "JOIN telefonos_empleados ON telefonos_empleados.id_empleado = empleados.id_empleado " +
+                "JOIN contratos ON contratos.id_empleado = empleados.id_empleado " +
+                "JOIN estados_contratos ON estados_contratos.id_estado_contrato = contratos.id_estado_contrato " +
+                "JOIN cargos_empleados ON cargos_empleados.id_cargo_empleado = empleados.id_cargo_empleado " +
+                "WHERE empleados.id_empleado = @id";
+            query.Parameters.AddWithValue("@id", id);
+            return cn.selectQuery(query);
         }
 
         // INSERTS

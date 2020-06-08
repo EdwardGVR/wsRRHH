@@ -140,9 +140,9 @@ namespace wsRRHH
         }
 
         [WebMethod]
-        public DataSet getDetallesEmpleado (string idType, int id, string dui)
+        public DataSet getDetallesEmpleado (int id)
         {
-            return empleados.getDetallesEmpleado(idType, id, dui);
+            return empleados.getDetallesEmpleado(id);
         }
 
         [WebMethod]
