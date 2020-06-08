@@ -57,9 +57,9 @@ namespace wsRRHH.DAL
                 "(titulo, cupo, id_departamento, descripcion) " +
                 "VALUES (@titulo, @cupo, @id_departamento, @descripcion)";
             query.Parameters.AddWithValue("@titulo", titulo);
-            query.Parameters.AddWithValue("@titulo", cupo);
-            query.Parameters.AddWithValue("@titulo", idDpto);
-            query.Parameters.AddWithValue("@titulo", descripcion);
+            query.Parameters.AddWithValue("@cupo", cupo);
+            query.Parameters.AddWithValue("@id_departamento", idDpto);
+            query.Parameters.AddWithValue("@descripcion", descripcion);
             cn.insertQuery(query);
         }
     }

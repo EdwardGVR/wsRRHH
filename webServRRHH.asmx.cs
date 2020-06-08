@@ -145,6 +145,12 @@ namespace wsRRHH
             return empleados.getDetallesEmpleado(idType, id, dui);
         }
 
+        [WebMethod]
+        public DataSet getTiposEvaluaciones ()
+        {
+            return evaluaciones.getTiposEvaluaciones();
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -181,6 +187,12 @@ namespace wsRRHH
         public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
         {
             capacitaciones.insertCapacitacion(titulo, descripcion, cupo, idDpto);
+        }
+
+        [WebMethod]
+        public void insertEvaluacion (string evaluacion, int idTipo, string objetivos, int maxScore)
+        {
+            evaluaciones.insertEvaluacion(evaluacion, idTipo, objetivos, maxScore);
         }
 
         // DELETES
