@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
 
 namespace wsRRHH.DAL
 {
@@ -58,6 +59,25 @@ namespace wsRRHH.DAL
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT * FROM niveles_usuarios";
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getDetallesUsuario (int idUsuario)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "usuarios.nombres, " +
+                "usuarios.apellidos, " +
+                "usuarios.correo, " +
+                "usuarios.usuario, " +
+                "usuarios.fecha_creacion, " +
+                "estados_usuarios.estado_usuario, " +
+                "niveles_usuarios.nivel_usuario " +
+                "FROM usuarios " +
+                "JOIN estados_usuarios ON estados_usuarios.id_estado_usuario = usuarios.id_estado_usuario " +
+                "JOIN niveles_usuarios ON niveles_usuarios.id_nivel_usuario = usuarios.id_nivel " +
+                "WHERE usuarios.id_usuario = @idUsuario";
+            query.Parameters.AddWithValue("@idUsuario", idUsuario);
             return cn.selectQuery(query);
         }
 

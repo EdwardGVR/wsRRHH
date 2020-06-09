@@ -84,6 +84,28 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getDetallesAsignCap (int idAsign)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "asignaciones_capacitaciones.id_asignacion_cap, " +
+                "asignaciones_capacitaciones.id_capacitacion, " +
+                "empleados.nombres, " +
+                "empleados.apellidos, " +
+                "empleados.correo, " +
+                "empleados.DUI, " +
+                "telefonos_empleados.telefono AS Telefono, " +
+                "departamentos.departamento AS \"Departamento empleado\", " +
+                "asignaciones_capacitaciones.fecha_asignacion " +
+                "FROM asignaciones_capacitaciones " +
+                "JOIN empleados ON empleados.id_empleado = asignaciones_capacitaciones.id_empleado " +
+                "JOIN telefonos_empleados ON telefonos_empleados.id_empleado = empleados.id_empleado " +
+                "JOIN departamentos ON departamentos.id_departamento = empleados.id_departamento " +
+                "WHERE asignaciones_capacitaciones.id_asignacion_cap = @idAsign";
+            query.Parameters.AddWithValue("@idAsign", idAsign);
+            return cn.selectQuery(query);
+        }
+
         public Boolean validateCapEmp (int idCap, int idEmp)
         {
             SqlCommand query = new SqlCommand();

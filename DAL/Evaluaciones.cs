@@ -44,14 +44,14 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public DataSet getTiposEvaluaciones ()
+        public DataSet getTiposEvaluaciones()
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT * FROM tipos_evaluaciones";
             return cn.selectQuery(query);
         }
 
-        public DataSet getDetallesEvaluacion (int idEval)
+        public DataSet getDetallesEvaluacion(int idEval)
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT " +
@@ -67,7 +67,7 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public DataSet getAsignEvalApl (int idEval)
+        public DataSet getAsignEvalApl(int idEval)
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT " +
@@ -82,7 +82,7 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public DataSet getAplicantesByVac (int idVac)
+        public DataSet getAplicantesByVac(int idVac)
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT " +
@@ -95,7 +95,7 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
-        public Boolean validateEvApl (int idEval, int idApl)
+        public Boolean validateEvApl(int idEval, int idApl)
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT COUNT(*) " +
@@ -116,6 +116,24 @@ namespace wsRRHH.DAL
             {
                 return true;
             }
+        }
+
+        public DataSet getDetallesAsignEval(int idAsign)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "asignaciones_evaluaciones.id_evaluacion, " +
+                "asignaciones_evaluaciones.fecha_evaluacion, " +
+                "asignaciones_evaluaciones.hora_evaluacion, " +
+                "aplicantes.nombres, " +
+                "aplicantes.apellidos, " +
+                "aplicantes.email, " +
+                "aplicantes.telefono " +
+                "FROM asignaciones_evaluaciones " +
+                "JOIN aplicantes ON aplicantes.id_aplicante = asignaciones_evaluaciones.id_aplicante " +
+                "WHERE asignaciones_evaluaciones.id_asignacion_eval = @idAsign";
+            query.Parameters.AddWithValue("@idAsign", idAsign);
+            return cn.selectQuery(query);
         }
 
         // INSERTS
