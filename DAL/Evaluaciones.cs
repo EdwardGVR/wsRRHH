@@ -82,6 +82,42 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getAplicantesByVac (int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "aplicantes.id_aplicante AS ID, " +
+                "aplicantes.nombres + \' \' + aplicantes.apellidos AS Aplicante " +
+                "FROM aplicantes " +
+                "JOIN aplicaciones_vacantes ON aplicaciones_vacantes.id_aplicante = aplicantes.id_aplicante " +
+                "WHERE aplicaciones_vacantes.id_vacante = @idVac";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            return cn.selectQuery(query);
+        }
+
+        public Boolean validateEvApl (int idEval, int idApl)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) " +
+                "FROM asignaciones_evaluaciones " +
+                "WHERE id_evaluacion = @idEval AND id_aplicante = @idApl";
+            query.Parameters.AddWithValue("@idEval", idEval);
+            query.Parameters.AddWithValue("@idApl", idApl);
+
+            DataSet result = cn.selectQuery(query);
+
+            int resCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+
+            if (resCount >= 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         // INSERTS
         public void insertEvaluacion (string evaluacion, int idTipo, string objetivos, int maxScore)
         {
@@ -93,6 +129,19 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@idTipo", idTipo);
             query.Parameters.AddWithValue("@objetivos", objetivos);
             query.Parameters.AddWithValue("@maxScore", maxScore);
+            cn.insertQuery(query);
+        }
+
+        public void asignAplEval (int idEval, int idApl, string fechaEval, string horaEval)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO asignaciones_evaluaciones " +
+                "(id_evaluacion, id_aplicante, fecha_evaluacion, hora_evaluacion) " +
+                "VALUES (@idEval, @idAplicante, @fechaEvaluacion, @horaEvaluacion)";
+            query.Parameters.AddWithValue("@idEval", idEval);
+            query.Parameters.AddWithValue("@idAPlicante", idApl);
+            query.Parameters.AddWithValue("@fechaEvaluacion", fechaEval);
+            query.Parameters.AddWithValue("@horaEvaluacion", horaEval);
             cn.insertQuery(query);
         }
     }

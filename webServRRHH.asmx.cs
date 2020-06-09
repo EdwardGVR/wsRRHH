@@ -193,6 +193,18 @@ namespace wsRRHH
             return evaluaciones.getAsignEvalApl(idEval);
         }
 
+        [WebMethod]
+        public DataSet getAplicantesByVac (int idEval)
+        {
+            return evaluaciones.getAplicantesByVac(idEval);
+        }
+
+        [WebMethod]
+        public Boolean validateEvApl (int idEval, int idApl)
+        {
+            return evaluaciones.validateEvApl(idEval, idApl);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -248,6 +260,12 @@ namespace wsRRHH
         {
             capacitaciones.asignarEmpCap(idCap, idEmp, codigo);
         }
+
+        [WebMethod]
+        public void asignarAplEval (int idEval, int idAplicante, string fechaEvaluacion, string horaEvaluacion)
+        {
+            evaluaciones.asignAplEval(idEval, idAplicante, fechaEvaluacion, horaEvaluacion);
+        } 
 
         // DELETES
         [WebMethod]
