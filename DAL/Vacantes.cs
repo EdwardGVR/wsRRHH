@@ -171,6 +171,13 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getResultadosAplicaciones ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM resultados_aplicaciones";
+            return cn.selectQuery(query);
+        }
+
         // Devuelve verdadero si el dui no esta registrado
         public Boolean uniqueAplDui (string dui)
         {
@@ -312,6 +319,37 @@ namespace wsRRHH.DAL
             cn.updateQuery(query);
         }
 
+        public void updateAplicante (int idApl, string nombres, string apellidos, string dui, string correo, string direccion, string telefono, int idTipo, int idResultado)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "UPDATE aplicantes SET " +
+                "nombres = @nombres, " +
+                "apellidos = @apellidos, " +
+                "email = @correo, " +
+                "telefono = @telefono, " +
+                "direccion = @direccion, " +
+                "dui = @dui, " +
+                "id_tipo_aplicante = @idTipo " +
+                "WHERE id_aplicante = @idApl";
+            query.Parameters.AddWithValue("@nombres", nombres);
+            query.Parameters.AddWithValue("@apellidos", apellidos);
+            query.Parameters.AddWithValue("@correo", correo);
+            query.Parameters.AddWithValue("@telefono", telefono);
+            query.Parameters.AddWithValue("@direccion", direccion);
+            query.Parameters.AddWithValue("@dui", dui);
+            query.Parameters.AddWithValue("@idTipo", idTipo);
+            query.Parameters.AddWithValue("@idApl", idApl);
+            cn.updateQuery(query);
+
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "UPDATE aplicaciones_vacantes SET " +
+                "id_resultado_aplicacion = @idResult " +
+                "WHERE id_aplicante = @idApl";
+            query2.Parameters.AddWithValue("@idResult", idResultado);
+            query2.Parameters.AddWithValue("@idApl", idApl);
+            cn.updateQuery(query2);
+        }
+
         // DELETES
 
         // Borra una vacante y sus requisitos
@@ -334,6 +372,19 @@ namespace wsRRHH.DAL
             query.CommandText = "DELETE FROM requisitos_vacantes WHERE id_requisitos_vacante = @idReq";
             query.Parameters.AddWithValue("@idReq", idReq);
             cn.deleteQuery(query);
+        }
+
+        public void deleteAplicante (int idApl)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM aplicaciones_vacantes WHERE id_aplicante = @idApl";
+            query.Parameters.AddWithValue("@idApl", idApl);
+            cn.deleteQuery(query);
+
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "DELETE FROM aplicantes WHERE id_aplicante = @idApl";
+            query2.Parameters.AddWithValue("@idApl", idApl);
+            cn.deleteQuery(query2);
         }
     }
 }

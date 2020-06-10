@@ -241,6 +241,12 @@ namespace wsRRHH
             return vacantes.getDetallesAplicante(idApl);
         }
 
+        [WebMethod]
+        public DataSet getResultadosAplicaciones()
+        {
+            return vacantes.getResultadosAplicaciones();
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -252,6 +258,12 @@ namespace wsRRHH
         public void updateRequisito (int idReq, string requisito, string detalles, int idPrioridad)
         {
             vacantes.updateRequisito(idReq, requisito, detalles, idPrioridad);
+        }
+
+        [WebMethod]
+        public void updateAplicante(int idApl, string nombres, string apellidos, string dui, string correo, string direccion, string telefono, int idTipo, int idResultado)
+        {
+            vacantes.updateAplicante(idApl, nombres, apellidos, dui, correo, direccion, telefono, idTipo, idResultado);
         }
 
         // INSERTS
@@ -338,6 +350,12 @@ namespace wsRRHH
         public void deleteAsigEval (int idAsign)
         {
             evaluaciones.deleteAsignEval(idAsign);
+        }
+
+        [WebMethod]
+        public void deleteAplicante (int idApl)
+        {
+            vacantes.deleteAplicante(idApl);
         }
     }
 }
