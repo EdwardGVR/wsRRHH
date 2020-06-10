@@ -152,14 +152,12 @@ namespace wsRRHH.DAL
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT " +
-                "aplicaciones_vacantes.id_aplicacion AS ID, " +
+                "aplicantes.id_aplicante AS ID, " +
                 "aplicantes.nombres AS Nombres, " +
                 "aplicantes.apellidos AS Apellidos, " +
-                "estados_aplicantes.estado_aplicante AS Estado, " +
                 "tipos_aplicantes.tipo_aplicante AS Tipo " +
                 "FROM aplicaciones_vacantes " +
                 "JOIN aplicantes ON aplicantes.id_aplicante = aplicaciones_vacantes.id_aplicante " +
-                "JOIN estados_aplicantes ON estados_aplicantes.id_estado_aplicante = aplicantes.id_estado_aplicante " +
                 "JOIN tipos_aplicantes ON tipos_aplicantes.id_tipo_aplicante = aplicantes.id_tipo_aplicante " +
                 "WHERE aplicaciones_vacantes.id_vacante = @idVac";
             query.Parameters.AddWithValue("idVac", idVac);
@@ -208,7 +206,7 @@ namespace wsRRHH.DAL
                 "FROM aplicantes " +
                 "JOIN tipos_aplicantes ON tipos_aplicantes.id_tipo_aplicante = aplicantes.id_tipo_aplicante " +
                 "JOIN aplicaciones_vacantes ON aplicaciones_vacantes.id_aplicante = aplicantes.id_aplicante " +
-                "JOIN resultados_aplicaciones ON resultados_aplicaciones.id_resultado_apliacion = aplicaciones_vacantes.id_resultado_aplicacion " +
+                "JOIN resultados_aplicaciones ON resultados_aplicaciones.id_resultado_aplicacion = aplicaciones_vacantes.id_resultado_aplicacion " +
                 "WHERE aplicantes.id_aplicante = @idApl";
             query.Parameters.AddWithValue("@idApl", idApl);
             return cn.selectQuery(query);
