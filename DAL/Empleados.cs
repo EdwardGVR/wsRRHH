@@ -68,6 +68,13 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         } 
 
+        public DataSet getEstadosContratos ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM estados_contratos";
+            return cn.selectQuery(query);
+        }
+
         // INSERTS
         public void insertEmpleado (string nombres, string apellidos, string dui, string email, string telefono1, string telefono2, string direccion, int idDpto, int idCargo, double salario)
         {
@@ -120,7 +127,64 @@ namespace wsRRHH.DAL
         }
 
         // UPDATES
+        public void updateEmpleado (string nombres, string apellidos, string dui, string email, string telefono1, string telefono2, 
+            string direccion, int idDpto, int idCargo, double salario, int idEstadoContrato, int idEmp)
+        {
+            // Guardar los datos principales
+            SqlCommand query1 = new SqlCommand();
+            query1.CommandText = "UPDATE empleados SET " +
+                "nombres = @nombres, " +
+                "apellidos = @apellidos, " +
+                "DUI = @dui, " +
+                "correo = @correo, " +
+                "direccion = @direccion, " +
+                "id_cargo_empleado = @idCargo, " +
+                "id_departamento = @idDpto " +
+                "WHERE id_empleado = @idEmp";
+            query1.Parameters.AddWithValue("@nombres", nombres);
+            query1.Parameters.AddWithValue("@apellidos", apellidos);
+            query1.Parameters.AddWithValue("@dui", dui);
+            query1.Parameters.AddWithValue("@correo", email);
+            query1.Parameters.AddWithValue("@direccion", direccion);
+            query1.Parameters.AddWithValue("@idCargo", idCargo);
+            query1.Parameters.AddWithValue("@idDpto", idDpto);
+            query1.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.insertQuery(query1);
 
+            // Borrar los telefonos
+            SqlCommand delTels = new SqlCommand();
+            delTels.CommandText = "DELETE FROM telefonos_empleados WHERE id_empleado = @idEmp";
+            delTels.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.deleteQuery(delTels);
+
+            // GUardar los telefonos
+            SqlCommand query3 = new SqlCommand();
+            query3.CommandText = "INSERT INTO telefonos_empleados " +
+                "(id_empleado, telefono) " +
+                "VALUES (@id_empleado, @telefono1)";
+            query3.Parameters.AddWithValue("@id_empleado", idEmp);
+            query3.Parameters.AddWithValue("@telefono1", telefono1);
+            cn.insertQuery(query3);
+
+            SqlCommand query4 = new SqlCommand();
+            query4.CommandText = "INSERT INTO telefonos_empleados " +
+                "(id_empleado, telefono) " +
+                "VALUES (@id_empleado, @telefono2)";
+            query4.Parameters.AddWithValue("@id_empleado", idEmp);
+            query4.Parameters.AddWithValue("@telefono2", telefono2);
+            cn.insertQuery(query4);
+
+            // Guardar el salario en contratos
+            SqlCommand query5 = new SqlCommand();
+            query5.CommandText = "UPDATE contratos SET " +
+                "salario = @salario, " +
+                "id_estado_contrato = @idEstadoContrato " +
+                "WHERE id_empleado = @idEmp";
+            query5.Parameters.AddWithValue("@salario", salario);
+            query5.Parameters.AddWithValue("@idEstadoContrato", idEstadoContrato);
+            query5.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.insertQuery(query5);
+        }
 
         // DELETES
 

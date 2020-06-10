@@ -247,6 +247,12 @@ namespace wsRRHH
             return vacantes.getResultadosAplicaciones();
         }
 
+        [WebMethod]
+        public DataSet getEstadosContratos()
+        {
+            return empleados.getEstadosContratos();
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -264,6 +270,13 @@ namespace wsRRHH
         public void updateAplicante(int idApl, string nombres, string apellidos, string dui, string correo, string direccion, string telefono, int idTipo, int idResultado)
         {
             vacantes.updateAplicante(idApl, nombres, apellidos, dui, correo, direccion, telefono, idTipo, idResultado);
+        }
+
+        [WebMethod]
+        public void updateEmpleado(string nombres, string apellidos, string dui, string email, string telefono1, string telefono2,
+            string direccion, int idDpto, int idCargo, double salario, int idEstadoContrato, int idEmp)
+        {
+            empleados.updateEmpleado(nombres, apellidos, dui, email, telefono1, telefono2, direccion, idDpto, idCargo, salario, idEstadoContrato, idEmp);
         }
 
         // INSERTS
