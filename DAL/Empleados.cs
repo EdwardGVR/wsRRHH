@@ -187,7 +187,31 @@ namespace wsRRHH.DAL
         }
 
         // DELETES
+        public void deleteEmpleado (int idEmp)
+        {
+            // Borrar telefonos
+            SqlCommand query1 = new SqlCommand();
+            query1.CommandText = "DELETE FROM telefonos_empleados WHERE id_empleado = @idEmp";
+            query1.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.deleteQuery(query1);
 
+            // Borrar contrato
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "DELETE FROM contratos WHERE id_empleado = @idEmp";
+            query2.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.deleteQuery(query2);
 
+            // Borrar asignaciones a capacitaciones
+            SqlCommand query3 = new SqlCommand();
+            query3.CommandText = "DELETE FROM asignaciones_capacitaciones WHERE id_empleado = @idEmp";
+            query3.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.deleteQuery(query3);
+
+            // Borrar empleado
+            SqlCommand query4 = new SqlCommand();
+            query4.CommandText = "DELETE FROM empleados WHERE id_empleado = @idEmp";
+            query4.Parameters.AddWithValue("@idEmp", idEmp);
+            cn.deleteQuery(query4);
+        }
     }
 }

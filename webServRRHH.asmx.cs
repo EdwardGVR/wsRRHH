@@ -370,5 +370,11 @@ namespace wsRRHH
         {
             vacantes.deleteAplicante(idApl);
         }
+
+        [WebMethod]
+        public void deleteEmpleado(int idEmp)
+        {
+            empleados.deleteEmpleado(idEmp);
+        }
     }
 }
