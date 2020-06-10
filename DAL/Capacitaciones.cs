@@ -153,5 +153,14 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@codigo", codigo);
             cn.insertQuery(query);
         }
+
+        // DELETES
+        public void deleteAsignCap (int idAsign)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM asignaciones_capacitaciones WHERE id_asignacion_cap = @idAsign";
+            query.Parameters.AddWithValue("@idAsign", idAsign);
+            cn.deleteQuery(query);
+        }
     }
 }

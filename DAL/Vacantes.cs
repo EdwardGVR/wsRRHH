@@ -148,18 +148,84 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public DataSet getAplicantesVac (int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "aplicaciones_vacantes.id_aplicacion AS ID, " +
+                "aplicantes.nombres AS Nombres, " +
+                "aplicantes.apellidos AS Apellidos, " +
+                "estados_aplicantes.estado_aplicante AS Estado, " +
+                "tipos_aplicantes.tipo_aplicante AS Tipo " +
+                "FROM aplicaciones_vacantes " +
+                "JOIN aplicantes ON aplicantes.id_aplicante = aplicaciones_vacantes.id_aplicante " +
+                "JOIN estados_aplicantes ON estados_aplicantes.id_estado_aplicante = aplicantes.id_estado_aplicante " +
+                "JOIN tipos_aplicantes ON tipos_aplicantes.id_tipo_aplicante = aplicantes.id_tipo_aplicante " +
+                "WHERE aplicaciones_vacantes.id_vacante = @idVac";
+            query.Parameters.AddWithValue("idVac", idVac);
+            return cn.selectQuery(query);
+        }
+
+        public DataSet getTiposAplicantes ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM tipos_aplicantes";
+            return cn.selectQuery(query);
+        }
+
+        // Devuelve verdadero si el dui no esta registrado
+        public Boolean uniqueAplDui (string dui)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM aplicantes WHERE dui = @dui";
+            query.Parameters.AddWithValue("@dui", dui);
+
+            DataSet resutl = cn.selectQuery(query);
+            int resCount = int.Parse(resutl.Tables[0].Rows[0][0].ToString());
+
+            if (resCount > 0)
+            {
+                return false;
+            } else
+            {
+                return true;
+            }
+        }
+
+        public DataSet getDetallesAplicante (int idApl)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT " +
+                "aplicantes.nombres, " +
+                "aplicantes.apellidos, " +
+                "aplicantes.email, " +
+                "aplicantes.telefono, " +
+                "aplicantes.direccion, " +
+                "aplicantes.dui, " +
+                "tipos_aplicantes.tipo_aplicante, " +
+                "aplicaciones_vacantes.fecha_aplicacion, " +
+                "resultados_aplicaciones.resultado_aplicacion " +
+                "FROM aplicantes " +
+                "JOIN tipos_aplicantes ON tipos_aplicantes.id_tipo_aplicante = aplicantes.id_tipo_aplicante " +
+                "JOIN aplicaciones_vacantes ON aplicaciones_vacantes.id_aplicante = aplicantes.id_aplicante " +
+                "JOIN resultados_aplicaciones ON resultados_aplicaciones.id_resultado_apliacion = aplicaciones_vacantes.id_resultado_aplicacion " +
+                "WHERE aplicantes.id_aplicante = @idApl";
+            query.Parameters.AddWithValue("@idApl", idApl);
+            return cn.selectQuery(query);
+        }
+
         // INSERTS
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
         {
-            SqlCommand query = new SqlCommand();
-            query.CommandText = "INSERT INTO vacantes(codigo_vacante, vacante, id_departamento, cupo_vacante, descripcion) " +
+            SqlCommand query1 = new SqlCommand();
+            query1.CommandText = "INSERT INTO vacantes(codigo_vacante, vacante, id_departamento, cupo_vacante, descripcion) " +
                 "VALUES(@codVac, @vacante, @idDpto, @cupo, @descripcion)";
-            query.Parameters.AddWithValue("@codVac", codVac);
-            query.Parameters.AddWithValue("@vacante", vacante);
-            query.Parameters.AddWithValue("@idDpto", idDpto);
-            query.Parameters.AddWithValue("@cupo", cupo);
-            query.Parameters.AddWithValue("@descripcion", descripcion);
-            cn.insertQuery(query);
+            query1.Parameters.AddWithValue("@codVac", codVac);
+            query1.Parameters.AddWithValue("@vacante", vacante);
+            query1.Parameters.AddWithValue("@idDpto", idDpto);
+            query1.Parameters.AddWithValue("@cupo", cupo);
+            query1.Parameters.AddWithValue("@descripcion", descripcion);
+            cn.insertQuery(query1);
         }
 
         public void insertRequisito (int idVac, string codVac, string requisito, string detalles, int idPrioridad)
@@ -173,6 +239,34 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@detReqVac", detalles);
             query.Parameters.AddWithValue("@idPrioridadReqVac", idPrioridad);
             cn.insertQuery(query);
+        }
+
+        public void insertAplicante (int idVac, string nombre, string apellido, string correo, string telefono, string direccion, int idTipo, string dui)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "INSERT INTO aplicantes (id_tipo_aplicante, nombres, apellidos, email, telefono, direccion, dui) " +
+                "VALUES (@idTipo, @nombre, @apellido, @email, @telefono, @direccion, @dui)";
+            query.Parameters.AddWithValue("@idTipo", idTipo);
+            query.Parameters.AddWithValue("@nombre", nombre);
+            query.Parameters.AddWithValue("@apellido", apellido);
+            query.Parameters.AddWithValue("@email", correo);
+            query.Parameters.AddWithValue("@telefono", telefono);
+            query.Parameters.AddWithValue("@direccion", direccion);
+            query.Parameters.AddWithValue("@dui", dui);
+            cn.insertQuery(query);
+
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "SELECT id_aplicante FROM aplicantes WHERE dui = @dui";
+            query2.Parameters.AddWithValue("@dui", dui);
+            DataSet result = cn.selectQuery(query2);
+            int idApl = int.Parse(result.Tables[0].Rows[0][0].ToString());
+
+            SqlCommand query3 = new SqlCommand();
+            query3.CommandText = "INSERT INTO aplicaciones_vacantes (id_vacante, id_aplicante) " +
+                "VALUES (@idVac, @idApl)";
+            query3.Parameters.AddWithValue("@idVac", idVac);
+            query3.Parameters.AddWithValue("@idApl", idApl);
+            cn.insertQuery(query3);
         }
 
         // UPDATES

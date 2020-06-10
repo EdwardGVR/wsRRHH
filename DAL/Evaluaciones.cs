@@ -162,5 +162,14 @@ namespace wsRRHH.DAL
             query.Parameters.AddWithValue("@horaEvaluacion", horaEval);
             cn.insertQuery(query);
         }
+
+        // DELETES
+        public void deleteAsignEval (int idAsign)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM asignaciones_evaluaciones WHERE id_asignacion_eval = @idAsign";
+            query.Parameters.AddWithValue("@idAsign", idAsign);
+            cn.deleteQuery(query);
+        }
     }
 }

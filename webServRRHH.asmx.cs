@@ -223,6 +223,24 @@ namespace wsRRHH
             return evaluaciones.getDetallesAsignEval(idAsign);
         }
 
+        [WebMethod]
+        public DataSet getAplicantesVac (int idVac)
+        {
+            return vacantes.getAplicantesVac(idVac);
+        }
+
+        [WebMethod]
+        public DataSet getTiposAplicantes()
+        {
+            return vacantes.getTiposAplicantes();
+        }
+
+        [WebMethod]
+        public DataSet getDetallesAplicante(int idApl)
+        {
+            return vacantes.getDetallesAplicante(idApl);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -285,6 +303,18 @@ namespace wsRRHH
             evaluaciones.asignAplEval(idEval, idAplicante, fechaEvaluacion, horaEvaluacion);
         } 
 
+        [WebMethod]
+        public Boolean uniqueAplDui (string dui)
+        {
+            return vacantes.uniqueAplDui(dui);
+        } 
+
+        [WebMethod]
+        public void insertAplicante (int idVac, string nombre, string apellido, string correo, string telefono, string direccion, int idTipo, string dui)
+        {
+            vacantes.insertAplicante(idVac, nombre, apellido, correo, telefono, direccion, idTipo, dui);
+        }
+
         // DELETES
         [WebMethod]
         public void deleteVacante (string vacCode)
@@ -296,6 +326,18 @@ namespace wsRRHH
         public void deleteRequisito (int idReq)
         {
             vacantes.deleteRequisito(idReq);
+        }
+
+        [WebMethod]
+        public void deleteAsignCap (int idAsign)
+        {
+            capacitaciones.deleteAsignCap(idAsign);
+        }
+
+        [WebMethod]
+        public void deleteAsigEval (int idAsign)
+        {
+            evaluaciones.deleteAsignEval(idAsign);
         }
     }
 }
