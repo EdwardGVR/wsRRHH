@@ -163,6 +163,24 @@ namespace wsRRHH.DAL
             cn.insertQuery(query);
         }
 
+        // UPDATES
+        public void updateEvaluacion (int idEval, string evaluacion, string objetivo, int idTipo, int maxScore) 
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "UPDATE evaluaciones SET " +
+                "evaluacion = @evaluacion, " +
+                "id_tipo_evaluacion = @idTipo, " +
+                "objetivos = @objetivo, " +
+                "puntaje_maximo = @maxScore " +
+                "WHERE id_evaluacion = @idEval";
+            query.Parameters.AddWithValue("@evaluacion", evaluacion);
+            query.Parameters.AddWithValue("@idTipo", idTipo);
+            query.Parameters.AddWithValue("@objetivo", objetivo);
+            query.Parameters.AddWithValue("@maxScore", maxScore);
+            query.Parameters.AddWithValue("@idEval", idEval);
+            cn.updateQuery(query);
+        }
+
         // DELETES
         public void deleteAsignEval (int idAsign)
         {
@@ -170,6 +188,21 @@ namespace wsRRHH.DAL
             query.CommandText = "DELETE FROM asignaciones_evaluaciones WHERE id_asignacion_eval = @idAsign";
             query.Parameters.AddWithValue("@idAsign", idAsign);
             cn.deleteQuery(query);
+        }
+
+        public void deleteEvaluacion (int idEval)
+        {
+            // Borrar las asignaciones de la evaluacion
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM asignaciones_evaluaciones WHERE id_evaluacion = @idEval";
+            query.Parameters.AddWithValue("@idEval", idEval);
+            cn.deleteQuery(query);
+
+            // Borrar la evaluacion
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "DELETE FROM evaluaciones WHERE id_evaluacion = @idEval";
+            query2.Parameters.AddWithValue("@idEval", idEval);
+            cn.deleteQuery(query2);
         }
     }
 }

@@ -253,6 +253,18 @@ namespace wsRRHH
             return empleados.getEstadosContratos();
         }
 
+        [WebMethod]
+        public DataSet getEstadosCapacitaciones()
+        {
+            return capacitaciones.getEstadosCapacitaciones();
+        }
+
+        [WebMethod]
+        public int getUserIdByUser(string user)
+        {
+            return usuarios.getUserIdByUser(user);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -277,6 +289,18 @@ namespace wsRRHH
             string direccion, int idDpto, int idCargo, double salario, int idEstadoContrato, int idEmp)
         {
             empleados.updateEmpleado(nombres, apellidos, dui, email, telefono1, telefono2, direccion, idDpto, idCargo, salario, idEstadoContrato, idEmp);
+        }
+
+        [WebMethod]
+        public void updateCapacitacion(int idCap, string tiutlo, string decripcion, int cupo, int idDpto, int idEstado)
+        {
+            capacitaciones.updateCapacitacion(idCap, tiutlo, decripcion, cupo, idDpto, idEstado);
+        }
+
+        [WebMethod]
+        public void updateEvaluacion(int idEval, string evaluacion, string objetivo, int idTipo, int maxScore)
+        {
+            evaluaciones.updateEvaluacion(idEval, evaluacion, objetivo, idTipo, maxScore);
         }
 
         // INSERTS
@@ -369,6 +393,24 @@ namespace wsRRHH
         public void deleteAplicante (int idApl)
         {
             vacantes.deleteAplicante(idApl);
+        }
+
+        [WebMethod]
+        public void deleteEmpleado(int idEmp)
+        {
+            empleados.deleteEmpleado(idEmp);
+        }
+
+        [WebMethod]
+        public void deleteCapacitacion(int idCap)
+        {
+            capacitaciones.deleteCapacitacion(idCap);
+        }
+
+        [WebMethod]
+        public void deleteEvaluacion(int idEval)
+        {
+            evaluaciones.deleteEvaluacion(idEval);
         }
     }
 }
