@@ -75,6 +75,25 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public int getCountEmpsByDpto (int idDpto)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM empleados WHERE id_departamento = @idDpto";
+            query.Parameters.AddWithValue("@idDpto", idDpto);
+            DataSet result = cn.selectQuery(query);
+            int empsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return empsCount;
+        }
+
+        public int getCountEmps()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM empleados";
+            DataSet result = cn.selectQuery(query);
+            int empsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return empsCount;
+        }
+
         // INSERTS
         public void insertEmpleado (string nombres, string apellidos, string dui, string email, string telefono1, string telefono2, string direccion, int idDpto, int idCargo, double salario)
         {

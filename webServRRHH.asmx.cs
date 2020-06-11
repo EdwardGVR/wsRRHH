@@ -265,6 +265,67 @@ namespace wsRRHH
             return usuarios.getUserIdByUser(user);
         }
 
+        // iOS
+        [WebMethod]
+        public int getCountEmps()
+        {
+            return empleados.getCountEmps();
+        }
+
+        [WebMethod]
+        public int getCountVacs()
+        {
+            return vacantes.getCountVacs();
+        }
+
+        [WebMethod]
+        public int getCountCaps()
+        {
+            return capacitaciones.getCountCaps();
+        }
+
+        [WebMethod]
+        public int getCountEvals()
+        {
+            return evaluaciones.getCountEvals();
+        }
+
+        [WebMethod]
+        public int getCountEmpsByDpto(int idDpto)
+        {
+            return empleados.getCountEmpsByDpto(idDpto);
+        }
+
+        [WebMethod]
+        public int getCountVacsByDpto(int idDpto)
+        {
+            return vacantes.getCountVacsByDpto(idDpto);
+        }
+
+        [WebMethod]
+        public int getCountCapsByDpto(int idDpto)
+        {
+            return capacitaciones.getCountCapsByDpto(idDpto);
+        }
+
+        [WebMethod]
+        public int getCountAsignsCaps()
+        {
+            return capacitaciones.getCountAsignsCaps();
+        }
+
+        [WebMethod]
+        public int getCountAsignsByCaps(int idCap)
+        {
+            return capacitaciones.getCountAsignsByCaps(idCap);
+        }
+
+        [WebMethod]
+        public int getCountEmpsByCap(int idCap)
+        {
+            return capacitaciones.getCountEmpsByCap(idCap);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)

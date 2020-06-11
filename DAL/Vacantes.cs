@@ -219,6 +219,25 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public int getCountVacsByDpto(int idDpto)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM vacantes WHERE id_departamento = @idDpto";
+            query.Parameters.AddWithValue("@idDpto", idDpto);
+            DataSet result = cn.selectQuery(query);
+            int vacsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return vacsCount;
+        }
+
+        public int getCountVacs()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM vacantes";
+            DataSet result = cn.selectQuery(query);
+            int vacsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return vacsCount;
+        }
+
         // INSERTS
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
         {

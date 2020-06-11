@@ -135,6 +135,53 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public int getCountCapsByDpto(int idDpto)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM capacitaciones WHERE id_departamento = @idDpto";
+            query.Parameters.AddWithValue("@idDpto", idDpto);
+            DataSet result = cn.selectQuery(query);
+            int capsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return capsCount;
+        }
+
+        public int getCountEmpsByCap(int idCap)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM asignaciones_capacitaciones WHERE id_capacitacion = @idCap";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            DataSet result = cn.selectQuery(query);
+            int empsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return empsCount;
+        }
+
+        public int getCountCaps()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM capacitaciones";
+            DataSet result = cn.selectQuery(query);
+            int capsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return capsCount;
+        }
+
+        public int getCountAsignsCaps()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM asignaciones_capacitaciones";
+            DataSet result = cn.selectQuery(query);
+            int asignCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return asignCount;
+        }
+
+        public int getCountAsignsByCaps(int idCap)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM asignaciones_capacitaciones WHERE id_capacitacion";
+            DataSet result = cn.selectQuery(query);
+            int asignCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return asignCount;
+        }
+
         // INSERTS
         public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
         {

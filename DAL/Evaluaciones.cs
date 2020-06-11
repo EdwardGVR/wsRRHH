@@ -136,6 +136,15 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public int getCountEvals()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM evaluaciones";
+            DataSet result = cn.selectQuery(query);
+            int evalsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return evalsCount;
+        }
+
         // INSERTS
         public void insertEvaluacion (string evaluacion, int idTipo, string objetivos, int maxScore)
         {
