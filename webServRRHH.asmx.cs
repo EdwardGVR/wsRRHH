@@ -253,6 +253,12 @@ namespace wsRRHH
             return empleados.getEstadosContratos();
         }
 
+        [WebMethod]
+        public DataSet getEstadosCapacitaciones()
+        {
+            return capacitaciones.getEstadosCapacitaciones();
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
@@ -277,6 +283,12 @@ namespace wsRRHH
             string direccion, int idDpto, int idCargo, double salario, int idEstadoContrato, int idEmp)
         {
             empleados.updateEmpleado(nombres, apellidos, dui, email, telefono1, telefono2, direccion, idDpto, idCargo, salario, idEstadoContrato, idEmp);
+        }
+
+        [WebMethod]
+        public void updateCapacitacion(int idCap, string tiutlo, string decripcion, int cupo, int idDpto, int idEstado)
+        {
+            capacitaciones.updateCapacitacion(idCap, tiutlo, decripcion, cupo, idDpto, idEstado);
         }
 
         // INSERTS
@@ -375,6 +387,12 @@ namespace wsRRHH
         public void deleteEmpleado(int idEmp)
         {
             empleados.deleteEmpleado(idEmp);
+        }
+
+        [WebMethod]
+        public void deleteCapacitacion(int idCap)
+        {
+            capacitaciones.deleteCapacitacion(idCap);
         }
     }
 }

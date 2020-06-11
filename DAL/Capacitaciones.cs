@@ -128,6 +128,13 @@ namespace wsRRHH.DAL
             }
         }
 
+        public DataSet getEstadosCapacitaciones ()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT * FROM estados_capacitaciones";
+            return cn.selectQuery(query);
+        }
+
         // INSERTS
         public void insertCapacitacion (string titulo, string descripcion, int cupo, int idDpto)
         {
@@ -154,6 +161,26 @@ namespace wsRRHH.DAL
             cn.insertQuery(query);
         }
 
+        // UPDATES
+        public void updateCapacitacion (int idCap, string tiutlo, string decripcion, int cupo, int idDpto, int idEstado)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "UPDATE capacitaciones SET " +
+                "titulo = @titulo, " +
+                "cupo = @cupo, " +
+                "id_departamento = @idDpto, " +
+                "id_estado_capacitacion = @idEstado, " +
+                "descripcion = @descripcion " +
+                "WHERE id_capacitacion = @idCap";
+            query.Parameters.AddWithValue("@titulo", tiutlo);
+            query.Parameters.AddWithValue("@cupo", cupo);
+            query.Parameters.AddWithValue("@idDpto", idDpto);
+            query.Parameters.AddWithValue("@idEstado", idEstado);
+            query.Parameters.AddWithValue("@descripcion", decripcion);
+            query.Parameters.AddWithValue("@idCap", idCap);
+            cn.updateQuery(query);
+        }
+
         // DELETES
         public void deleteAsignCap (int idAsign)
         {
@@ -161,6 +188,21 @@ namespace wsRRHH.DAL
             query.CommandText = "DELETE FROM asignaciones_capacitaciones WHERE id_asignacion_cap = @idAsign";
             query.Parameters.AddWithValue("@idAsign", idAsign);
             cn.deleteQuery(query);
+        }
+
+        public void deleteCapacitacion (int idCap)
+        {
+            // Borrar las asignaciones de la capacitacion
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "DELETE FROM asignaciones_capacitaciones WHERE id_capacitacion = @idCap";
+            query.Parameters.AddWithValue("@idCap", idCap);
+            cn.deleteQuery(query);
+
+            // Borrar la capacitacion
+            SqlCommand query2 = new SqlCommand();
+            query2.CommandText = "DELETE FROM capacitaciones WHERE id_capacitacion = @idCap";
+            query2.Parameters.AddWithValue("@idCap", idCap);
+            cn.deleteQuery(query2);
         }
     }
 }
