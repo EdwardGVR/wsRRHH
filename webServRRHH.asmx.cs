@@ -291,6 +291,12 @@ namespace wsRRHH
             capacitaciones.updateCapacitacion(idCap, tiutlo, decripcion, cupo, idDpto, idEstado);
         }
 
+        [WebMethod]
+        public void updateEvaluacion(int idEval, string evaluacion, string objetivo, int idTipo, int maxScore)
+        {
+            evaluaciones.updateEvaluacion(idEval, evaluacion, objetivo, idTipo, maxScore);
+        }
+
         // INSERTS
         [WebMethod]
         public void insertVacante(string codVac, string vacante, int idDpto, int cupo, string descripcion)
@@ -393,6 +399,12 @@ namespace wsRRHH
         public void deleteCapacitacion(int idCap)
         {
             capacitaciones.deleteCapacitacion(idCap);
+        }
+
+        [WebMethod]
+        public void deleteEvaluacion(int idEval)
+        {
+            evaluaciones.deleteEvaluacion(idEval);
         }
     }
 }
