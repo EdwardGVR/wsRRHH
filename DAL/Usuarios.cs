@@ -81,6 +81,16 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        public int getUserIdByUser (string user)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT id_usuario FROM usuarios WHERE usuario = @usuario";
+            query.Parameters.AddWithValue("@usuario", user);
+            DataSet result = cn.selectQuery(query);
+            int idUser = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return idUser;
+        }
+
         // INSERTS
         public void insertUsuario (string nombres, string apellidos, string email, string usuario, string password, int idNivel)
         {

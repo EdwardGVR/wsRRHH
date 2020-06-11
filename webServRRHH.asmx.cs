@@ -259,6 +259,12 @@ namespace wsRRHH
             return capacitaciones.getEstadosCapacitaciones();
         }
 
+        [WebMethod]
+        public int getUserIdByUser(string user)
+        {
+            return usuarios.getUserIdByUser(user);
+        }
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)
