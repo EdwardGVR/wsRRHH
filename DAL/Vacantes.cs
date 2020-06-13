@@ -219,6 +219,8 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+
+        // Obtiene el total de vacantes por departamento
         public int getCountVacsByDpto(int idDpto)
         {
             SqlCommand query = new SqlCommand();
@@ -229,6 +231,7 @@ namespace wsRRHH.DAL
             return vacsCount;
         }
 
+        // Obtiene el total de vacantes
         public int getCountVacs()
         {
             SqlCommand query = new SqlCommand();
@@ -236,6 +239,78 @@ namespace wsRRHH.DAL
             DataSet result = cn.selectQuery(query);
             int vacsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
             return vacsCount;
+        }
+
+        // Obtiene el total de requisitos por vacante
+        public int getCountReqsByVac (int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM requisitos_vacantes WHERE id_vacante = @idVac";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            DataSet result = cn.selectQuery(query);
+            int reqsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return reqsCount;
+        }
+
+        // Obtiene el total de aplicaciones por vacante
+        public int getCountAplicsByVac(int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM aplicaciones_vacantes WHERE id_vacante = @idVac";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            DataSet result = cn.selectQuery(query);
+            int aplsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return aplsCount;
+        }
+
+        // Obtiene el total de aplicantes externos
+        public int getCountExternApls()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM aplicantes WHERE id_tipo_aplicante = 1";
+            DataSet result = cn.selectQuery(query);
+            int aplsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return aplsCount;
+        }
+
+        // Obtiene el total de aplicantes empleados
+        public int getCountEmpApls()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM aplicantes WHERE id_tipo_aplicante = 2";
+            DataSet result = cn.selectQuery(query);
+            int aplsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return aplsCount;
+        }
+
+        // Obtiene el total de aplicantes externos por vacante
+        public int getCountExternAplsByVac(int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) " +
+                "FROM aplicantes " +
+                "JOIN aplicaciones_vacantes ON aplicantes.id_aplicante = aplicaciones_vacantes.id_aplicante " +
+                "WHERE aplicantes.id_tipo_aplicante = 1 " +
+                "AND aplicaciones_vacantes.id_vacante = @idVac";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            DataSet result = cn.selectQuery(query);
+            int aplsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return aplsCount;
+        }
+
+        // Obtiene el total de aplicantes empleados por vacante
+        public int getCountEmpAplsByVac (int idVac)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) " +
+                "FROM aplicantes " +
+                "JOIN aplicaciones_vacantes ON aplicantes.id_aplicante = aplicaciones_vacantes.id_aplicante " +
+                "WHERE aplicantes.id_tipo_aplicante = 2 " +
+                "AND aplicaciones_vacantes.id_vacante = @idVac";
+            query.Parameters.AddWithValue("@idVac", idVac);
+            DataSet result = cn.selectQuery(query);
+            int aplsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return aplsCount;
         }
 
         // INSERTS

@@ -326,6 +326,62 @@ namespace wsRRHH
             return capacitaciones.getCountEmpsByCap(idCap);
         }
 
+        [WebMethod]
+        public int getCountReqsByVac(int idVac)
+        {
+            return vacantes.getCountReqsByVac(idVac);
+        }
+
+        [WebMethod]
+        public int getCountAplicsByVac(int idVac)
+        {
+            return vacantes.getCountAplicsByVac(idVac);
+        }
+
+        [WebMethod]
+        // Obtiene el total de aplicantes externos
+        public int getCountExternApls()
+        {
+            return vacantes.getCountExternApls();
+        }
+
+        [WebMethod]
+        // Obtiene el total de aplicantes empleados
+        public int getCountEmpApls()
+        {
+            return vacantes.getCountEmpApls();
+        }
+
+        [WebMethod]
+        // Obtiene el total de aplicantes externos por vacante
+        public int getCountExternAplsByVac(int idVac)
+        {
+            return vacantes.getCountExternAplsByVac(idVac);
+        }
+
+        [WebMethod]
+        // Obtiene el total de aplicantes empleados por vacante
+        public int getCountEmpAplsByVac(int idVac)
+        {
+            return vacantes.getCountEmpAplsByVac(idVac);
+        }
+
+        [WebMethod]
+        // Obtiene el total de evaluaciones segun tipo
+        public int getCountEvalsByType(int idTipo)
+        {
+            return evaluaciones.getCountEvalsByType(idTipo);
+        }
+
+        [WebMethod]
+        // Obtiene el total de asignaciones a evaluaciones
+        public int getCountAsingEvals()
+        {
+            return evaluaciones.getCountAsingEvals();
+        }
+
+
+
         // UPDATES
         [WebMethod]
         public void updateVacante (string codVac, string newCodVac, string vacante, string descripcion, int idDpto, int idEstado, int cupo)

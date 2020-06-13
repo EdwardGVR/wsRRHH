@@ -136,10 +136,32 @@ namespace wsRRHH.DAL
             return cn.selectQuery(query);
         }
 
+        // Obtiene el total de evaluaciones
         public int getCountEvals()
         {
             SqlCommand query = new SqlCommand();
             query.CommandText = "SELECT COUNT(*) FROM evaluaciones";
+            DataSet result = cn.selectQuery(query);
+            int evalsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return evalsCount;
+        }
+
+        // Obtiene el total de evaluaciones segun tipo
+        public int getCountEvalsByType(int idTipo)
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM evaluaciones WHERE id_tipo_evaluacion = @idTipo";
+            query.Parameters.AddWithValue("@idTipo", idTipo);
+            DataSet result = cn.selectQuery(query);
+            int evalsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
+            return evalsCount;
+        }
+
+        // Obtiene el total de asignaciones a evaluaciones
+        public int getCountAsingEvals()
+        {
+            SqlCommand query = new SqlCommand();
+            query.CommandText = "SELECT COUNT(*) FROM asignaciones_evaluaciones";
             DataSet result = cn.selectQuery(query);
             int evalsCount = int.Parse(result.Tables[0].Rows[0][0].ToString());
             return evalsCount;
